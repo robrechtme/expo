@@ -8,7 +8,7 @@
 
 ### 🐛 Bug fixes
 
-- Fix Typed Routes clashing types and allow strict types for hooks.
+- Fix Typed Routes clashing types and allow strict types for hooks. ([#29612](https://github.com/expo/expo/pull/29612) by [@marklawlor](https://github.com/marklawlor))
 
 ### 💡 Others
 
