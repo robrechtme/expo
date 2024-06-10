@@ -8,6 +8,8 @@
 
 ### 🐛 Bug fixes
 
+- Fix Typed Routes clashing types and allow strict types for hooks.
+
 ### 💡 Others
 
 - Split up getRoutes method for SSR. ([#29232](https://github.com/expo/expo/pull/29232) by [@EvanBacon](https://github.com/EvanBacon))
