@@ -13,6 +13,7 @@
 ### 🐛 Bug fixes
 
 - [Android] Fix wrong content fit "fill" and "cover". ([#29364](https://github.com/expo/expo/pull/29364) by [@RRaideRR](https://github.com/RRaideRR))
+- [Web] Fix `AudioContext` being created before user interaction causing playback issues. ([#29695](https://github.com/expo/expo/pull/29695) by [@behenate](https://github.com/behenate))
 
 ### 💡 Others
 
