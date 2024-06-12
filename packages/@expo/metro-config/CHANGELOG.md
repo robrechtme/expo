@@ -11,7 +11,7 @@
 
 ### 🐛 Bug fixes
 
-- Prevent special characters from being used in JS/CSS asset output filenames.
+- Prevent special characters from being used in JS/CSS asset output filenames. ([#29689](https://github.com/expo/expo/pull/29689) by [@kitten](https://github.com/kitten))
 - Fix source map generation in development. ([#29463](https://github.com/expo/expo/pull/29463) by [@EvanBacon](https://github.com/EvanBacon))
 
 ### 💡 Others
