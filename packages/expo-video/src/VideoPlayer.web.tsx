@@ -37,6 +37,7 @@ export default class VideoPlayerWeb
   }
 
   src: VideoSource = null;
+  previousSrc: VideoSource = null;
   _mountedVideos: Set<HTMLVideoElement> = new Set();
   _audioNodes: Set<MediaElementAudioSourceNode> = new Set();
   playing: boolean = false;
@@ -82,9 +83,6 @@ export default class VideoPlayerWeb
   }
 
   get volume(): number {
-    this._mountedVideos.forEach((video) => {
-      this._volume = video.volume;
-    });
     return this._volume;
   }
 
@@ -178,14 +176,12 @@ export default class VideoPlayerWeb
     this._mountedVideos.forEach((video) => {
       video.play();
     });
-    this.playing = true;
   }
 
   pause(): void {
     this._mountedVideos.forEach((video) => {
       video.pause();
     });
-    this.playing = false;
   }
 
   replace(source: VideoSource): void {
@@ -200,6 +196,9 @@ export default class VideoPlayerWeb
         video.removeAttribute('src');
       }
     });
+    // TODO @behenate: this won't work when we add support for playlists
+    this.previousSrc = this.src;
+    this.src = source;
     this.playing = true;
   }
 
@@ -234,6 +233,7 @@ export default class VideoPlayerWeb
 
   _addListeners(video: HTMLVideoElement): void {
     video.onplay = () => {
+      this.emit('playingChange', true, this.playing);
       this.playing = true;
       this._mountedVideos.forEach((mountedVideo) => {
         mountedVideo.play();
@@ -241,6 +241,7 @@ export default class VideoPlayerWeb
     };
 
     video.onpause = () => {
+      this.emit('playingChange', false, this.playing);
       this.playing = false;
       this._mountedVideos.forEach((mountedVideo) => {
         mountedVideo.pause();
@@ -248,6 +249,11 @@ export default class VideoPlayerWeb
     };
 
     video.onvolumechange = () => {
+      this.emit(
+        'volumeChange',
+        { volume: video.volume, isMuted: video.muted },
+        { volume: this.volume, isMuted: this.muted }
+      );
       this.volume = video.volume;
       this.muted = video.muted;
     };
@@ -267,27 +273,43 @@ export default class VideoPlayerWeb
     };
 
     video.onratechange = () => {
+      this.emit('playbackRateChange', video.playbackRate, this.playbackRate);
       this._mountedVideos.forEach((mountedVideo) => {
-        if (mountedVideo === video || mountedVideo.playbackRate === video.playbackRate) return;
+        if (mountedVideo.playbackRate === video.playbackRate) return;
         this._playbackRate = video.playbackRate;
         mountedVideo.playbackRate = video.playbackRate;
       });
+      this._playbackRate = video.playbackRate;
     };
 
     video.onerror = () => {
+      const errorMessage = video.error?.message ?? 'Unknown player error';
+
+      this.emit('statusChange', 'error', this._status, {
+        message: errorMessage,
+      });
       this._status = 'error';
     };
 
-    video.onloadeddata = () => {
+    video.oncanplay = () => {
+      this.emit('statusChange', 'readyToPlay', this._status);
       this._status = 'readyToPlay';
-
       if (this.playing && video.paused) {
         video.play();
       }
     };
 
     video.onwaiting = () => {
+      this.emit('statusChange', 'loading', this._status);
       this._status = 'loading';
+    };
+
+    video.onended = () => {
+      this.emit('playToEnd');
+    };
+
+    video.onloadstart = () => {
+      this.emit('sourceChange', this.src, this.previousSrc);
     };
   }
 }
