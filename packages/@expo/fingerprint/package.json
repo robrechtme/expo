@@ -52,6 +52,7 @@
   },
   "devDependencies": {
     "@types/find-up": "^4.0.0",
+    "@types/glob": "^7.2.0",
     "expo-module-scripts": "^3.3.0",
     "glob": "^7.1.7",
     "require-from-string": "^2.0.2",
