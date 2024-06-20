@@ -8,8 +8,7 @@ import { Terminal } from '~/ui/components/Snippet';
 
 SSO is available for [Enterprise plan](https://expo.dev/pricing) customers and set up is self-service.
 
-To get started, first prepare your identity provider (IdP) for Expo SSO and gather information by following a configuration guide below.
-Once you have done this, the owner of your Organization can enable SSO, as described below.
+To get started, prepare your identity provider (IdP) for Expo SSO and gather information by following the [configuration guide for your IdP](/#identity-provider-support) below. Once you have done this, the owner of your Organization can follow instructions to [enable SSO](#enable-sso).
 
 If you have setup questions or issues, [contact us](https://expo.dev/contact) and we'll help you set up your organization.
 
@@ -30,27 +29,26 @@ We implement the [OpenID Connect Discovery 1.0](https://openid.net/specs/openid-
 SSO is enabled by creating SSO configuration for the Organization.
 
 <Step label="1">
-	Log in as the Organization account owner, select your Organization Account, then go to Organization Settings > Overview.
+	Log in as the Organization account owner, select your Organization Account, then go to **Organization settings** > **Overview**.
 </Step>
 
 <Step label="2">
-	Click the ‘Start’ button next to the ‘Create SSO configuration for account’ option.
+	Click the **Start** button next to the **Create SSO configuration for account** option.
 </Step>
 
 <Step label="3">
-	Enter the configuration details for your IdP in the form, with the information from setting up your IdP:
-  - your client ID
-  - your client secret
-  - your IdP subdomain/tenant ID, if needed. Check the Issuer field help for what to enter.
+	Enter the configuration details for your IdP in the form, using the information you collected during the IdP setup:
+  - client ID
+  - client secret
+  - IdP subdomain/tenant ID, if needed. Click the **?** icon above the Issuer field for help with what to enter.
 </Step>
 
 <Step label="4">
-	Click ‘Create SSO Configuration’ and you should see the message that you have successfully created SSO configuration for your account.
+	Click **Create SSO Configuration** and you should see the message that you have successfully created SSO configuration for your account.
 	</Step>
 
 <Step label="5">
-  The Organization Settings > Overview page will now display an ‘Update SSO configuration’ option.
-  - use this option to update the client secret when it has changed.
+  The **Organization settings** > **Overview** page will now display an **Update SSO configuration** option. Use this option to update the client secret when it has changed.
 </Step>
 
 
